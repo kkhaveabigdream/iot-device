@@ -12,6 +12,7 @@
 '''
 from random import uniform
 
+
 class SenseHat():
     rotateDeg = 270
     clearFlag = False

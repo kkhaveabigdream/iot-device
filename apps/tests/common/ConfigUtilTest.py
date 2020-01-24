@@ -1,6 +1,3 @@
-import unittest
-
-
 """
 Test class for the ConfigUtil module.
 
@@ -13,6 +10,10 @@ Instructions:
 
 Please note: While some example test cases may be provided, you must write your own for the class.
 """
+
+import unittest
+
+
 class ConfigUtilTest(unittest.TestCase):
 
 	"""
