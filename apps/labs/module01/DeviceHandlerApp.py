@@ -4,8 +4,8 @@ Created on Jan 20, 2020
 @author: sk199
 '''
 import logging
-
 from time import sleep
+
 from labs.module01.SystemPerformanceAdaptor import SystemPerformanceAdaptor
 
 

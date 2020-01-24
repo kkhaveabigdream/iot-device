@@ -3,12 +3,15 @@ Created on Jan 20, 2020
 
 @author: sk199
 '''
-import psutil
 import logging
-from time import sleep
-from labs.module01.SystemCpuUtilTask import SystemCpuUtilTask
 import threading
+from time import sleep
+
+import psutil
+
+from labs.module01.SystemCpuUtilTask import SystemCpuUtilTask
 from labs.module01.SystemMemUtilTask import SystemMemUtilTask
+
 
 class SystemPerformanceAdaptor(threading.Thread):
     '''

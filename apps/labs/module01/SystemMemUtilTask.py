@@ -5,6 +5,7 @@ Created on Jan 20, 2020
 '''
 import psutil
 
+
 class SystemMemUtilTask(object):
     '''
     classdocs
