@@ -12,7 +12,8 @@ Please note: While some example test cases may be provided, you must write your 
 """
 
 import unittest
-
+from labs.module01.SystemCpuUtilTask import SystemCpuUtilTask
+from labs.module01.SystemMemUtilTask import SystemMemUtilTask
 
 class Module01Test(unittest.TestCase):
 
@@ -22,8 +23,8 @@ class Module01Test(unittest.TestCase):
 	instances of complex objects, initialize any requisite connections, etc.
 	"""
 	def setUp(self):
-		pass
-
+		self.c=SystemCpuUtilTask()
+		self.m=SystemMemUtilTask()
 	"""
 	Use this to tear down any allocated resources after your tests are complete. This
 	is where you may want to release connections, zero out any long-term data, etc.
@@ -32,10 +33,18 @@ class Module01Test(unittest.TestCase):
 		pass
 	
 	"""
-	Place your comments describing the test here.
+	getDataFromSensor() function returns a float value representing the on-demand CPU utilization
+	passing values will be anything between 0.0 and 100.0	
 	"""
-	def testSomething(self):
-		pass
+	def testSystemCpuUtil(self):
+		assert self.c.getDataFromSensor()>0 and self.c.getDataFromSensor()<100
+	
+	"""
+	getDataFromSensor() function returns a float value representing the on-demand Memory utilization
+	passing values will be anything between 0.0 and 100.0	
+	"""	
+	def testSystemMemUtil(self):
+		assert self.m.getDataFromSensor()>0 and self.m.getDataFromSensor()<100
 
 if __name__ == "__main__":
 	#import sys;sys.argv = ['', 'Test.testName']
