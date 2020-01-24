@@ -16,9 +16,9 @@ class SystemCpuUtilTask():
         Constructor
         '''
 
-
+#use psutil library, getting the CPU Utilization percentage
     def getDataFromSensor(self):
         cpuUtil = psutil.cpu_percent(0.1, False)
         return(cpuUtil)
 
-#print(SystemCpuUtilTask.getDataFromSensor())
+

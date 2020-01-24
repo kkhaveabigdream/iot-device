@@ -18,19 +18,23 @@ class SystemPerformanceAdaptor(threading.Thread):
     classdocs
     '''
 
+#set rate to retrieve getDataFromSensor() every 5 second.
     enableAdaptor = False
     rateInSec = 5
 
+#constructor
     def __init__(self, rateInSec=5):
         #threading.Thread.__init__(self)
         super(SystemPerformanceAdaptor,self).__init__()
         self.rateInSec=rateInSec
 
-    
+ 
+#Displaying the output from SystemCpuUtilTask and SystemMemUtilTask 
+#Using log message to output the CPU Utilization and Memory Utilization
+ 
     def run(self):
         while True:
             if self.enableAdaptor:
-                #cpuUtil = SystemCpuUtilTask.getDataFromSensor()
                 c = SystemCpuUtilTask()
                 cpuUtil = c.getDataFromSensor()
                 m = SystemMemUtilTask()

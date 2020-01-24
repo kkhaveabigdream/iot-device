@@ -16,7 +16,7 @@ class SystemMemUtilTask(object):
         '''
         Constructor
         '''
-    
+ #use psutil library, getting the Memory Utilization percentage   
     def getDataFromSensor(self):
         memUtil = psutil.virtual_memory().percent
         return(memUtil)
