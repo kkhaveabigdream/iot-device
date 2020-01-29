@@ -4,7 +4,7 @@ Created on Jan 28, 2020
 @author: sk199
 '''
 import configparser
-from os.path import os
+
 
 
 class ConfigUtil(object):
@@ -25,7 +25,7 @@ class ConfigUtil(object):
         self.configFile = configFile
         self.configData.read(self.configFile)
         secs = self.configData.sections()       
-       #print(secs)
+        #print(secs)
         for i in secs:   
             kvs = self.configData.items(i)
             print(kvs)
