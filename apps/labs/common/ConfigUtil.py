@@ -43,10 +43,17 @@ class ConfigUtil(object):
         '''
     def hasConfigData(self):
         if(self.isLoaded):
-            print("Config is Loaded")
+            print("has configData")
         else:
-            print("Config failed")
+            print("configData is NULL")
         return self.isLoaded
+    
+    def getValue(self,section,part):
+        self.section = section
+        self.part = part
+        self.configValue = self.configData.get(self.section, self.part)
+        print(self.configValue)
+        return self.configValue
             
    
         
@@ -55,3 +62,4 @@ class ConfigUtil(object):
 test=ConfigUtil()
 test.loadConfig()
 test.hasConfigData()
+test.getValue("smtp.cloud","port")
