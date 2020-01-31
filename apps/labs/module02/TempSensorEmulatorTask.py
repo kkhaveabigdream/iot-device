@@ -8,6 +8,7 @@ import threading
 from time import sleep
 from labs.common.SensorData import SensorData
 import logging
+from labs.module02.SmtpClientConnector import SmtpClientConnector
 
 class TempSensorEmulatorTask(threading.Thread):
     '''
@@ -24,6 +25,7 @@ class TempSensorEmulatorTask(threading.Thread):
         '''
         threading.Thread.__init__(self)
         #super(TempSensorEmulatorTask,self).__init__()
+        self.connector = SmtpClientConnector()
         self.rateInSec = rateInSec
         self.alertDiff = alertDiff
     
@@ -34,9 +36,10 @@ class TempSensorEmulatorTask(threading.Thread):
     
     def sendNotification(self):
         if (abs(self.sensorData.curValue-self.sensorData.getAverageValue()) >=self.alertDiff):
-            logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.DEBUG)
+            #logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.DEBUG)
             logging.info('\n Current temp exceeds average by >' +str(self.alertDiff) + '. Triggering alert...')
-            #print('\n Current temp exceeds average by >' +str(self.alertDiff) + '. Triggering alert...')
+            
+            self.connector.publishMessage('Excessive Temp', self.curValue)
     
     def run(self):
         while True:                      
@@ -44,7 +47,7 @@ class TempSensorEmulatorTask(threading.Thread):
             print(self.sensorData.curValue)
             #print(self.sensorData.getCurrentValue())
             print(self.sensorData.getCount())
-            print(self.sensorData.getAverageValue())
+            #print(self.sensorData.getAverageValue())
             self.sendNotification()
                        
             sleep(self.rateInSec)
