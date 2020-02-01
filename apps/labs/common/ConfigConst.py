@@ -4,6 +4,8 @@ Created on Jan 30, 2020
 @author: sk199
 '''
 
+CONFIGFILE = '../../../config/ConnectedDevicesConfig.props'
+
 SEPARATOR = '.'
 CLOUD = 'cloud'
 SMTP = 'smtp'

@@ -12,6 +12,7 @@ Please note: While some example test cases may be provided, you must write your 
 """
 
 import unittest
+from labs.common.ConfigUtil import ConfigUtil
 
 
 class Module02Test(unittest.TestCase):
@@ -22,7 +23,7 @@ class Module02Test(unittest.TestCase):
 	instances of complex objects, initialize any requisite connections, etc.
 	"""
 	def setUp(self):
-		pass
+		self.config = ConfigUtil()
 
 	"""
 	Use this to tear down any allocated resources after your tests are complete. This
@@ -34,8 +35,8 @@ class Module02Test(unittest.TestCase):
 	"""
 	Place your comments describing the test here.
 	"""
-	def testSomething(self):
-		pass
+	def testloadConfig(self):	
+		self.assertTrue(self.config.loadConfig('../../../config/ConnectedDevicesConfig.props') )
 
 if __name__ == "__main__":
 	#import sys;sys.argv = ['', 'Test.testName']

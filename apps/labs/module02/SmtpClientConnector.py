@@ -24,8 +24,12 @@ class SmtpClientConnector(object):
         self.config = ConfigUtil()
         self.config.loadConfig()
         
-        logging.info('Configuration data...\n' + str(self.config))
-        
+        logging.info('Configuration data...\n' + str(ConfigConst.CONFIGFILE))
+    
+    '''   
+    configured via the data stored in ConfigUtil    
+    implement an SMTP, sending sensor data to a remote email account
+    '''    
     def publishMessage(self,topic,data):
         host        = self.config.getValue(ConfigConst.SMTP_CLOUD_SECTION, ConfigConst.HOST_KEY)
         port        = self.config.getValue(ConfigConst.SMTP_CLOUD_SECTION, ConfigConst.PORT_KEY)
