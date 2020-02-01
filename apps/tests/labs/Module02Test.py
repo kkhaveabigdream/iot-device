@@ -13,6 +13,8 @@ Please note: While some example test cases may be provided, you must write your 
 
 import unittest
 from labs.common.ConfigUtil import ConfigUtil
+from labs.module02.TempSensorEmulatorTask import TempSensorEmulatorTask
+from labs.common.SensorData import SensorData
 
 
 class Module02Test(unittest.TestCase):
@@ -24,6 +26,15 @@ class Module02Test(unittest.TestCase):
 	"""
 	def setUp(self):
 		self.config = ConfigUtil()
+		self.config.loadConfig('../../../config/ConnectedDevicesConfig.props')
+		self.tempsensor = TempSensorEmulatorTask()
+		self.sensordata = SensorData()
+		self.sensordata.addValue(10)
+		self.sensordata.addValue(15)
+		self.sensordata.addValue(20)
+		self.sensordata.setName('Temperature')
+		
+		
 
 	"""
 	Use this to tear down any allocated resources after your tests are complete. This
@@ -37,7 +48,34 @@ class Module02Test(unittest.TestCase):
 	"""
 	def testloadConfig(self):	
 		self.assertTrue(self.config.loadConfig('../../../config/ConnectedDevicesConfig.props') )
-
+		
+	def testhasConfigData(self):
+		self.assertTrue(self.config.hasConfigData())
+		
+	def testgetValue(self):
+		self.assertEqual(self.config.getValue("smtp.cloud","port"), '465')
+		
+	def testgetSensorData(self):
+		assert self.tempsensor.getSensorData()>0 and self.tempsensor.getSensorData()<30
+		
+	def testgetAverageValue(self):
+		assert self.sensordata.getAverageValue()>0 and self.sensordata.getAverageValue()<30
+	
+	def testgetCount(self):
+		self.assertEqual(self.sensordata.getCount(),3)
+		
+	def testgetCurrentValue(self):
+		assert self.sensordata.getCurrentValue()>0 and self.sensordata.getCurrentValue()<30
+		
+	def testMinValue(self):
+		assert self.sensordata.getMinValue()>=0 and self.sensordata.getMinValue()<30
+	
+	def testMaxValue(self):
+		assert self.sensordata.getMaxValue()>0 and self.sensordata.getMaxValue()<30
+		
+	def testName(self):
+		self.assertEqual(self.sensordata.getName(), 'Temperature')
+		
 if __name__ == "__main__":
 	#import sys;sys.argv = ['', 'Test.testName']
 	unittest.main()
