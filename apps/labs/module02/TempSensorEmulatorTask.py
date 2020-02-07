@@ -74,4 +74,3 @@ class TempSensorEmulatorTask(threading.Thread):
 
 # t=TempSensorEmulatorTask()
 # t.start()
-

@@ -13,6 +13,7 @@ class ConfigUtil(object):
     '''
     configData = configparser.ConfigParser()
     configFile = '../../../config/ConnectedDevicesConfig.props'
+    kvs =()
 
     def __init__(self):
         
@@ -29,10 +30,10 @@ class ConfigUtil(object):
         secs = self.configData.sections()       
         #print(secs)
         for i in secs:   
-            kvs = self.configData.items(i)
+            self.kvs = self.configData.items(i)
             #print(kvs)
         
-        if(kvs):
+        if(self.kvs):
             self.isLoaded = True
             return True
         else:
@@ -56,7 +57,7 @@ class ConfigUtil(object):
         self.part = part
         self.configValue = self.configData.get(self.section, self.part)
         #print(self.configValue)
-        return self.configValue
+        return self.configValue 
             
    
         
