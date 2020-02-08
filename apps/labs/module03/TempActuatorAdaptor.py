@@ -9,6 +9,7 @@ class TempActuatorAdaptor(object):
     '''
     classdocs
     '''
+    curTemp = 0
 
 
     def __init__(self):
@@ -19,8 +20,10 @@ class TempActuatorAdaptor(object):
     
     def updateActuator(self,actuatorData):
         if(actuatorData.getCommand()=='Increasing'):
-            self.shLed.run()
+            self.curTemp = actuatorData.Value
+            self.shLed.run(self.curTemp)
             
         elif(actuatorData.getCommand()=='Decreasing'):
-            self.shLed.run2()
+            self.curTemp = actuatorData.Value
+            self.shLed.run2(self.curTemp)
             

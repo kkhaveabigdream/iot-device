@@ -48,7 +48,7 @@ class SenseHat():
     def set_rotation(self, rotateDeg):
         self.rotateDeg = rotateDeg
     
-    def show_letter(self,val='H'):
+    def show_letter(self,val):
         print(val)
     
     def show_message(self, msg):

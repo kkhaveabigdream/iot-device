@@ -15,7 +15,6 @@ class ActuatorData(object):
     Command = ''
     Value = 0.0
     Name = ''
-    sensordata = SensorData()
     
 
 
@@ -34,6 +33,5 @@ class ActuatorData(object):
     def getName(self):
         return self.Name
     
-    def getValue(self):
-        self.value = self.sensordata.getCurrentValue()
-        return self.value
+    def getValue(self,curValue):
+        self.Value = curValue

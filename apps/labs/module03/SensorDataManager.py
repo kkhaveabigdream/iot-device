@@ -44,14 +44,18 @@ class SensorDataManager(object):
             
             self.connector.publishMessage('Excessive Temperature', self.message)
             self.actuatorData.setCommand('Increasing')
+            self.actuatorData.getValue(sensorData.curValue)
             self.tempActuator.updateActuator(self.actuatorData)
+            print(self.message)
             
             
         elif(sensorData.curValue<self.nominalTemp):
             
             logging.info('\nCurrent temperature falls below nonminalTemp by > ' +str(self.nominalTemp) + '. Triggering alert...')                                     
              
-            self.connector.publishMessage('falling Temperature', self.message)
+            self.connector.publishMessage('Decreasing Temperature', self.message)
             self.actuatorData.setCommand('Decreasing')
+            self.actuatorData.getValue(sensorData.curValue)
             self.tempActuator.updateActuator(self.actuatorData)
+            print(self.message)
             

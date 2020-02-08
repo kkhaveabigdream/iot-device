@@ -7,8 +7,10 @@ import logging
 from time import sleep
 from labs.module03.TempSensorAdaptorTask import TempSensorAdaptorTask
 
-logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.DEBUG)
-logging.info("Starting temperature emulator adaptor  daemon thread...")
+logging.getLogger().setLevel(logging.INFO)
+#logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.INFO)
+logging.info("Starting temperature sensor adaptor  daemon thread...")
+
 
 tempsensoradaptor = TempSensorAdaptorTask()
 tempsensoradaptor.daemon = True
@@ -18,3 +20,4 @@ tempsensoradaptor.start()
 while (True):
     sleep(10)
     pass
+    
