@@ -9,6 +9,7 @@ CONFIGFILE = '../../../config/ConnectedDevicesConfig.props'
 SEPARATOR = '.'
 CLOUD = 'cloud'
 SMTP = 'smtp'
+DEVICE = 'device'
 
 SMTP_CLOUD_SECTION = SMTP + SEPARATOR + CLOUD
 
@@ -18,3 +19,5 @@ PORT_KEY = 'port'
 FROM_ADDRESS_KEY = 'fromAddr'
 TO_ADDRESS_KEY = 'toAddr'
 USER_AUTH_TOKEN_KEY = 'authToken'
+
+NOMINAL_TEMP = 'nominalTemp'

@@ -16,6 +16,7 @@ from random import uniform
 class SenseHat():
     rotateDeg = 270
     clearFlag = False
+    var =""
 
     def __init__(self):
         self.set_rotation(self.rotateDeg)
@@ -47,7 +48,7 @@ class SenseHat():
     def set_rotation(self, rotateDeg):
         self.rotateDeg = rotateDeg
     
-    def show_letter(self, val):
+    def show_letter(self,val='H'):
         print(val)
     
     def show_message(self, msg):

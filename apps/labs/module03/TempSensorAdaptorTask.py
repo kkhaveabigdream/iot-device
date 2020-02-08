@@ -7,6 +7,7 @@ import threading
 from labs.common.SensorData import SensorData
 from sense_hat import SenseHat
 from time import sleep
+from labs.module03.SensorDataManager import SensorDataManager
 
 
 class TempSensorAdaptorTask(threading.Thread):
@@ -14,11 +15,13 @@ class TempSensorAdaptorTask(threading.Thread):
     curTemp = 0
     sensorData = SensorData()
     sense = SenseHat()
-
+    manager = SensorDataManager()
+    
 
     def __init__(self, rateInSec=10):
         threading.Thread.__init__(self)
         self.rateInSec = rateInSec
+        self.time      = self.sensorData.timeStamp 
         
     def getTemperature(self):
         self.curTemp = self.sense.get_temperature()
@@ -27,5 +30,8 @@ class TempSensorAdaptorTask(threading.Thread):
     def run(self):
         while True:
             self.sensorData.addValue(self.getTemperature())
+            #print(self.sensorData.curValue)
+            self.manager.handleSensorData(self.sensorData)
+            
             sleep(self.rateInSec)
     
