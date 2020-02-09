@@ -14,12 +14,11 @@ from labs.module03.TempActuatorAdaptor import TempActuatorAdaptor
 class SensorDataManager(object):
     '''
     classdocs
-    '''
-    alertDiff = 0
+    '''   
     actuatorData = ActuatorData()
     
 
-    def __init__(self, altertDiff = 5):
+    def __init__(self):
         '''
         Constructor
         '''
@@ -27,7 +26,14 @@ class SensorDataManager(object):
         self.connector = SmtpClientConnector()
         self.tempActuator = TempActuatorAdaptor()
         
-    
+    '''
+    If current temperature exceeds or falls below the 'nominalTemp', the new SensorData instance will trigger an actuation
+    It will return the new ActualatorData instance with the appropriate data value and command embedded;
+    Otherwise, it returns None
+    Also,if an actuation is triggered, the SmtpClientConnector instance will be created to send the e-mail 
+    message to the appropriate destination    
+    '''
+        
     def handleSensorData(self,sensorData):
         self.nominalTemp = float(self.config.getValue(ConfigConst.DEVICE, ConfigConst.NOMINAL_TEMP))
         self.time       = sensorData.timeStamp                                     
@@ -47,15 +53,20 @@ class SensorDataManager(object):
             self.actuatorData.getValue(sensorData.curValue)
             self.tempActuator.updateActuator(self.actuatorData)
             print(self.message)
+            return(self.actuatorData)
             
             
         elif(sensorData.curValue<self.nominalTemp):
             
-            logging.info('\nCurrent temperature falls below nonminalTemp by > ' +str(self.nominalTemp) + '. Triggering alert...')                                     
+            logging.info('\nCurrent temperature falls below nonminalTemp by < ' +str(self.nominalTemp) + '. Triggering alert...')                                     
              
             self.connector.publishMessage('Decreasing Temperature', self.message)
             self.actuatorData.setCommand('Decreasing')
             self.actuatorData.getValue(sensorData.curValue)
             self.tempActuator.updateActuator(self.actuatorData)
             print(self.message)
+            return(self.actuatorData)
+        
+        else:
+            return(None)
             

@@ -17,6 +17,9 @@ class TempSensorAdaptorTask(threading.Thread):
     sense = SenseHat()
     manager = SensorDataManager()
     
+    '''
+    Read the Temperature from the SenseHAT
+    '''
 
     def __init__(self, rateInSec=10):
         threading.Thread.__init__(self)

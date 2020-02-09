@@ -4,7 +4,6 @@ Created on Feb 5, 2020
 @author: sk199
 '''
 from _datetime import datetime
-from labs.common.SensorData import SensorData
 
 
 class ActuatorData(object):
@@ -16,7 +15,9 @@ class ActuatorData(object):
     Value = 0.0
     Name = ''
     
-
+    '''
+    Capture the new state for the actuator
+    '''
 
     def __init__(self):
         self.timeStamp = str(datetime.now())

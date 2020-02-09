@@ -21,20 +21,24 @@ class SenseHatLedActivator(threading.Thread):
         self.red = (255,0,0)
         self.blue = (0,0,255)
         
-        
+    '''
+    If current temperature exceeds the 'nominalTemp, a red letter 'H' representing 'Hot' will show on the LED for 1 second, 
+    If current temperature falls below the 'nominalTemp, a blue letter 'C' representing 'Cool' will show on the LED for 1 second,
+    After that, the LED will show current Temperature value    
+    '''    
     
     def run(self,temp):
         self.sh.show_letter("H")
         #self.sh.show_letter("H",self.red)
         sleep(1)
-        self.msg = str(temp) + chr(223)
+        self.msg = str(temp) + ' ' + chr(176) + 'C'
         self.sh.show_message(self.msg)
-        #self.sh.show_message(temp+ u'\u2103',scroll_speed=0.5)
+        #self.sh.show_message(self.msg,scroll_speed=0.3)
         
     def run2(self,temp):
         self.sh.show_letter("C")
         #self.sh.show_letter("C",self.blue)
         sleep(1)
-        self.msg = str(temp) + chr(223)
+        self.msg = str(temp)+ ' ' + chr(176) + ' C'
         self.sh.show_message(self.msg)
-        #self.sh.show_message(temp + u'\u2103',scroll_speed=0.5)
+        #self.sh.show_message(self.msg,scroll_speed=0.3)

@@ -17,13 +17,18 @@ class TempActuatorAdaptor(object):
         Constructor
         '''
         self.shLed = SenseHatLedActivator()
+    '''
+    Access the SenseHAT'S LED matrix
+    Trigger LED model 1 if get Temperature Increasing command
+    Trigger LED model 2 if get Temperature Decreasing command
+    '''
     
     def updateActuator(self,actuatorData):
         if(actuatorData.getCommand()=='Increasing'):
-            self.curTemp = actuatorData.Value
+            self.curTemp = round(actuatorData.Value,2)
             self.shLed.run(self.curTemp)
             
         elif(actuatorData.getCommand()=='Decreasing'):
-            self.curTemp = actuatorData.Value
+            self.curTemp = round(actuatorData.Value,2)
             self.shLed.run2(self.curTemp)
             
