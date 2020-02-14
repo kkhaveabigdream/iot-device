@@ -54,20 +54,48 @@ class HI2CSensorAdaptorTask(threading.Thread):
         i2cBus.write_byte_data(humidAddr,0,0)
         
     def displayAccelerometerData(self):
-        acceleData = i2cBus.read_byte_data(accelAddr, begAddr, totBytes)
-        print(acceleData)
+        acceleData = i2cBus.read_i2c_block_data(accelAddr, begAddr, totBytes)
+        print("Accelerometer block data:    " + str(acceleData))
         
     def displayMagnetometerData(self):
-        magData = i2cBus.read_byte_data(magAddr, begAddr, totBytes)
-        print(magData)
+        magData = i2cBus.read_i2c_block_data(magAddr, begAddr, totBytes)
+        print("Magnetometer block data:     " + str(magData))
+        
     
     def displayPressureData(self):
-        pressureData = i2cBus.read_byte_data(pressAddr, begAddr, totBytes)
-        print(pressureData)
+        pressureData = i2cBus.read_i2c_block_data(pressAddr, begAddr, totBytes)
+        print("Pressure block data:         " + str(pressureData))
+        
         
     def displayHumidityData(self):
-        humidityData = i2cBus.read_byte_data(humidAddr, begAddr, totBytes)
-        print(humidityData)
+        humidityData = i2cBus.read_i2c_block_data(humidAddr, begAddr, totBytes)
+        print("Humidity block data:         " + str(humidityData))
+        
+     
+    def getHumidityData(self):
+        bits = 8
+        
+        coeffH0 = i2cBus.read_byte_data(humidAddr, 0x30)  >> 1
+        coeffH1 = i2cBus.read_byte_data(humidAddr, 0x31)  >> 1
+        h0_rh   = coeffH0
+        
+        h1_rh   = coeffH1
+        
+        valH0T0a = i2cBus.read_byte_data(humidAddr, 0x36)
+        valH0T0b = i2cBus.read_byte_data(humidAddr, 0x37)
+        valH0T0  = (valH0T0b<<bits) | valH0T0a
+        
+        valH1T0a = i2cBus.read_byte_data(humidAddr, 0x3A)
+        valH1T0b = i2cBus.read_byte_data(humidAddr, 0x3B)
+        valH1T0  = (valH1T0b<<bits) | valH1T0a
+        
+        valHTa    = i2cBus.read_byte_data(humidAddr, 0x28)
+        valHTb    = i2cBus.read_byte_data(humidAddr, 0x29)
+        valHT     = (valHTb<<bits) | valHTa
+        
+        RH = ((h1_rh-h0_rh)*(valHT-valH0T0))/(valH1T0-valH0T0) + h0_rh
+        print("Humidity:    " + str(RH))
+        
         
     def run(self):
         while True:
@@ -75,8 +103,17 @@ class HI2CSensorAdaptorTask(threading.Thread):
             self.displayMagnetometerData()
             self.displayPressureData()
             self.displayHumidityData()
+            self.getHumidityData()
             
             sleep(self.rateInSec)
+        
+    
+        
+        
+        
+        
+        
+        
         
         
 test = HI2CSensorAdaptorTask()
