@@ -4,7 +4,7 @@ Created on Jan 30, 2020
 @author: sk199
 '''
 
-CONFIGFILE = '../../../config/ConnectedDevicesConfig.props'
+DEFAULT_CONFIG_FILE_NAME = '../../../config/ConnectedDevicesConfig.props'
 
 SEPARATOR = '.'
 CLOUD = 'cloud'
