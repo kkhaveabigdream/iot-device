@@ -14,7 +14,7 @@ import logging
 from time import sleep
 
 
-i2cBus          = smbus2.SMBus(1)
+i2cBus          = smbus2.SMBus(1) 
 
 enableControl   = 0x2D
 enableMeasure   = 0x08
@@ -78,7 +78,6 @@ class HI2CSensorAdaptorTask(threading.Thread):
         coeffH0 = i2cBus.read_byte_data(humidAddr, 0x30)  >> 1
         coeffH1 = i2cBus.read_byte_data(humidAddr, 0x31)  >> 1
         h0_rh   = coeffH0
-        
         h1_rh   = coeffH1
         
         valH0T0a = i2cBus.read_byte_data(humidAddr, 0x36)
@@ -93,8 +92,8 @@ class HI2CSensorAdaptorTask(threading.Thread):
         valHTb    = i2cBus.read_byte_data(humidAddr, 0x29)
         valHT     = (valHTb<<bits) | valHTa
         
-        RH = ((h1_rh-h0_rh)*(valHT-valH0T0))/(valH1T0-valH0T0) + h0_rh
-        print("Humidity:    " + str(RH))
+        RH = (((h1_rh-h0_rh)*(valHT-valH0T0))/(valH1T0-valH0T0)) + h0_rh
+        print("I2C Direct Humidity:    " + str(RH))
         
         
     def run(self):
@@ -116,4 +115,4 @@ class HI2CSensorAdaptorTask(threading.Thread):
         
         
         
-test = HI2CSensorAdaptorTask()
+#test = HI2CSensorAdaptorTask()

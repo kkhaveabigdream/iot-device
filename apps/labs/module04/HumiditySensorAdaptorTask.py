@@ -33,7 +33,7 @@ class HumiditySensorAdaptorTask(threading.Thread):
     
     def run(self):
         while True:
-            
+            print("SenseHat API Humidity " + str(self.curHumid))
             self.sensorData.addValue(self.getHumidity())
             #print(self.sensorData.curValue)
             self.manager.handleSensorData(self.sensorData)
