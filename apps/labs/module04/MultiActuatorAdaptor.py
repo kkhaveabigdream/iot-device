@@ -3,7 +3,7 @@ Created on Feb 5, 2020
 
 @author: sk199
 '''
-from labs.module03.SenseHatLedActivator import SenseHatLedActivator
+from labs.module04.SenseHatLedActivator import SenseHatLedActivator
 
 class MultiActuatorAdaptor(object):
     '''

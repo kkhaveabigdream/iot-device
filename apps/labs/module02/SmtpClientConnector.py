@@ -24,7 +24,7 @@ class SmtpClientConnector(object):
         self.config = ConfigUtil()
         self.config.loadConfig()
         
-        logging.info('Configuration data...\n' + str(ConfigConst.CONFIGFILE))
+        logging.info('Configuration data...\n' + str(ConfigConst.DEFAULT_CONFIG_FILE_NAME))
     
     '''   
     configured via the data stored in ConfigUtil    

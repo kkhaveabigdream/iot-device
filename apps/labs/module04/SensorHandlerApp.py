@@ -5,7 +5,7 @@ Created on Feb 5, 2020
 '''
 import logging
 from time import sleep
-from labs.module03.TempSensorAdaptorTask import TempSensorAdaptorTask
+from labs.module04.TempSensorAdaptorTask import TempSensorAdaptorTask
 
 logging.getLogger().setLevel(logging.INFO)
 #logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.INFO)

@@ -48,10 +48,10 @@ class HI2CSensorAdaptorTask(threading.Thread):
     def initI2CBus(self):
         logging.info("Initializing I2C bus and enabling I2C addresses...")
         
-        i2cBus.write_byte_data(accelAddr, 0, 0)
-        i2cBus.write_byte_data(magAddr,0,0)
-        i2cBus.write_byte_data(pressAddr,0,0)
-        i2cBus.write_byte_data(humidAddr,0,0)
+        i2cBus.write_byte_data(accelAddr, enableControl, enableMeasure)
+        i2cBus.write_byte_data(magAddr,enableControl, enableMeasure)
+        i2cBus.write_byte_data(pressAddr,enableControl, enableMeasure)
+        i2cBus.write_byte_data(humidAddr,enableControl, enableMeasure)
         
     def displayAccelerometerData(self):
         acceleData = i2cBus.read_i2c_block_data(accelAddr, begAddr, totBytes)
