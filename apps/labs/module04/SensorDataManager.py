@@ -38,15 +38,16 @@ class SensorDataManager(object):
         
     def handleSensorData(self,sensorData):
         self.nominalTemp = float(self.config.getValue(ConfigConst.DEVICE, ConfigConst.NOMINAL_TEMP))
+        self.nominalHumid= float(self.config.getValue(ConfigConst.DEVICE, ConfigConst.NOMINAL_Humid))
         self.time       = sensorData.timeStamp                                     
         self.average    = sensorData.avgValue
         self.samples    = sensorData.getCount()
         self.min        = sensorData.minValue
-        self.max        = sensorData.maxValue 
-        self.message    = 'Temperature\n' + '\tTime: ' +str(self.time) + '\n\tCurrent: ' + str(sensorData.curValue) + '\n\tAverage: ' +str(self.average) + '\n\tSamples: ' + str(self.samples) + '\n\tMin: ' + str(self.min) + '\n\tMax: ' + str(self.max)
+        self.max        = sensorData.maxValue        
         self.name       = sensorData.getName()
         
         if (self.name == 'Temp'):
+            self.message    = 'Temperature\n' + '\tTime: ' +str(self.time) + '\n\tCurrent: ' + str(sensorData.curValue) + '\n\tAverage: ' +str(self.average) + '\n\tSamples: ' + str(self.samples) + '\n\tMin: ' + str(self.min) + '\n\tMax: ' + str(self.max)
             if(sensorData.curValue>self.nominalTemp):
             
                 logging.info('\nCurrent temperature exceeds nonminalTemp by > ' +str(self.nominalTemp) + '. Triggering alert...')
@@ -62,7 +63,7 @@ class SensorDataManager(object):
             
             elif(sensorData.curValue<self.nominalTemp):
                 
-                logging.info('\nCurrent temperature falls below nonminalTemp by < ' +str(self.nominalTemp) + '. Triggering alert...')                                     
+                logging.info('\nCurrent temperature lower than nonminalTemp by < ' +str(self.nominalTemp) + '. Triggering alert...')                                     
                  
                 self.connector.publishMessage('Decreasing Temperature', self.message)
                 self.actuatorData.setCommand('Decreasing')
@@ -73,4 +74,62 @@ class SensorDataManager(object):
             
             else:
                 return(None)
+        
+        if (self.name == 'Humid'):
+            self.message    = 'SenseHat API Humidity\n' + '\tTime: ' +str(self.time) + '\n\tCurrent: ' + str(sensorData.curValue) + '\n\tAverage: ' +str(self.average) + '\n\tSamples: ' + str(self.samples) + '\n\tMin: ' + str(self.min) + '\n\tMax: ' + str(self.max)
+            if(sensorData.curValue>self.nominalHumid):
+            
+                logging.info('\nCurrent humidity exceeds nonminalHumid by > ' +str(self.nominalHumid) + '. Triggering alert...')
+                #print('\nCurrent temperature exceeds nonminalTemp by > ' +str(self.nominalTemp) + '. Triggering alert...')      
+                
+                self.connector.publishMessage('Moist Humidity', self.message)
+                self.actuatorData.setCommand('sensehatMoist')
+                self.actuatorData.getValue(sensorData.curValue)
+                self.multiActuator.updateActuator(self.actuatorData)
+                print(self.message)
+                return(self.actuatorData)
+            
+            
+            elif(sensorData.curValue<self.nominalHumid):
+                
+                logging.info('\nCurrent Humidity lower than nonminalHumid by < ' +str(self.nominalTemp) + '. Triggering alert...')                                     
+                 
+                self.connector.publishMessage('Dry Humidity', self.message)
+                self.actuatorData.setCommand('sensehatDry')
+                self.actuatorData.getValue(sensorData.curValue)
+                self.multiActuator.updateActuator(self.actuatorData)
+                print(self.message)
+                return(self.actuatorData)
+            
+            else:
+                return(None)    
+            
+        if (self.name == 'I2C_Humid'):
+            self.message    = 'I2C Direct Humidity\n' + '\tTime: ' +str(self.time) + '\n\tCurrent: ' + str(sensorData.curValue) + '\n\tAverage: ' +str(self.average) + '\n\tSamples: ' + str(self.samples) + '\n\tMin: ' + str(self.min) + '\n\tMax: ' + str(self.max)
+            if(sensorData.curValue>self.nominalHumid):
+            
+                logging.info('\nCurrent humidity exceeds nonminalHumid by > ' +str(self.nominalHumid) + '. Triggering alert...')
+                #print('\nCurrent temperature exceeds nonminalTemp by > ' +str(self.nominalTemp) + '. Triggering alert...')      
+                
+                self.connector.publishMessage('Moist Humidity', self.message)
+                self.actuatorData.setCommand('i2cMoist')
+                self.actuatorData.getValue(sensorData.curValue)
+                self.multiActuator.updateActuator(self.actuatorData)
+                print(self.message)
+                return(self.actuatorData)
+            
+            
+            elif(sensorData.curValue<self.nominalHumid):
+                
+                logging.info('\nCurrent Humidity lower than nonminalHumid by < ' +str(self.nominalTemp) + '. Triggering alert...')                                     
+                 
+                self.connector.publishMessage('Dry Humidity', self.message)
+                self.actuatorData.setCommand('i2cDry')
+                self.actuatorData.getValue(sensorData.curValue)
+                self.multiActuator.updateActuator(self.actuatorData)
+                print(self.message)
+                return(self.actuatorData)
+            
+            else:
+                return(None)        
             

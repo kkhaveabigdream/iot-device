@@ -9,7 +9,8 @@ class MultiActuatorAdaptor(object):
     '''
     classdocs
     '''
-    curTemp = 0
+    curTemp     = 0
+    curHumid    = 0
 
 
     def __init__(self):
@@ -31,4 +32,22 @@ class MultiActuatorAdaptor(object):
         elif(actuatorData.getCommand()=='Decreasing'):
             self.curTemp = round(actuatorData.Value,2)
             self.shLed.run2(self.curTemp)
+        
+        elif(actuatorData.getCommand()=='sensehatMoist'):
+            self.curHumid = round(actuatorData.Value, 2)
+            self.shLed.run3(self.curHumid)
+            
+        elif(actuatorData.getCommand()=='sensehatDry'):
+            self.curHumid = round(actuatorData.Value, 2)
+            self.shLed.run4(self.curHumid)
+            
+        elif(actuatorData.getCommand()=='i2cMoist'):
+            self.curHumid = round(actuatorData.Value, 2)
+            self.shLed.run5(self.curHumid)
+                                
+        elif(actuatorData.getCommand()=='i2cDry'):
+            self.curHumid = round(actuatorData.Value, 2)    
+            self.shLed.run6(self.curHumid)            
+            
+            
             

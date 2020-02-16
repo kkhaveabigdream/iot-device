@@ -16,7 +16,8 @@ class HumiditySensorAdaptorTask(threading.Thread):
     curHumid = 0
     sensorData = SensorData()
     sense = SenseHat()
-    manager = SensorDataManager()
+    manager = SensorDataManager() 
+    enableHumidSensor = False
     
     '''
     Read the Temperature from the SenseHAT
@@ -28,15 +29,17 @@ class HumiditySensorAdaptorTask(threading.Thread):
         self.time      = self.sensorData.timeStamp 
         
     def getHumidity(self):
-        self.curHumid = self.sense.get_Humidity()
+        self.curHumid = self.sense.get_humidity()
         return self.curHumid
     
     def run(self):
         while True:
-            print("SenseHat API Humidity " + str(self.curHumid))
-            self.sensorData.addValue(self.getHumidity())
-            #print(self.sensorData.curValue)
-            self.manager.handleSensorData(self.sensorData)
-            
-            sleep(self.rateInSec)
+            if self.enableHumidSensor:
+                self.sensorData.setName("Humid")
+                print("SenseHat API Humidity " + str(self.curHumid))
+                self.sensorData.addValue(self.getHumidity())
+                #print(self.sensorData.curValue)
+                self.manager.handleSensorData(self.sensorData)
+                
+                sleep(self.rateInSec)
         

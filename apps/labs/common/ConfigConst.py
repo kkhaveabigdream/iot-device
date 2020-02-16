@@ -20,4 +20,5 @@ FROM_ADDRESS_KEY = 'fromAddr'
 TO_ADDRESS_KEY = 'toAddr'
 USER_AUTH_TOKEN_KEY = 'authToken'
 
-NOMINAL_TEMP = 'nominalTemp'
+NOMINAL_TEMP    = 'nominalTemp'
+NOMINAL_Humid   = 'nominalHumid'

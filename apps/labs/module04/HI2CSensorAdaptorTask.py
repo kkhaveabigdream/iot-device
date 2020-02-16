@@ -12,6 +12,8 @@ from labs.common.ConfigUtil import ConfigUtil
 from labs.common import ConfigConst
 import logging
 from time import sleep
+from labs.common.SensorData import SensorData
+from labs.module03.SensorDataManager import SensorDataManager
 
 
 i2cBus          = smbus2.SMBus(1) 
@@ -34,7 +36,10 @@ class HI2CSensorAdaptorTask(threading.Thread):
     '''
     classdocs
     '''
-
+    RH = 0 
+    sensorData = SensorData()
+    manager = SensorDataManager()
+    enableHI2CSensor = False
 
     def __init__(self,rateInSec = 5):
         super(HI2CSensorAdaptorTask,self).__init__()
@@ -83,28 +88,39 @@ class HI2CSensorAdaptorTask(threading.Thread):
         valH0T0a = i2cBus.read_byte_data(humidAddr, 0x36)
         valH0T0b = i2cBus.read_byte_data(humidAddr, 0x37)
         valH0T0  = (valH0T0b<<bits) | valH0T0a
+        if valH0T0 & (1 << 16 - 1):
+            valH0T0 -=(1 << 16)
         
         valH1T0a = i2cBus.read_byte_data(humidAddr, 0x3A)
         valH1T0b = i2cBus.read_byte_data(humidAddr, 0x3B)
         valH1T0  = (valH1T0b<<bits) | valH1T0a
+        if valH1T0 & (1 << 16 - 1):
+            valH1T0 -=(1 << 16)
         
         valHTa    = i2cBus.read_byte_data(humidAddr, 0x28)
         valHTb    = i2cBus.read_byte_data(humidAddr, 0x29)
         valHT     = (valHTb<<bits) | valHTa
+        if valHT & (1 << 16 - 1):
+            valHT -=(1 << 16)
         
-        RH = (((h1_rh-h0_rh)*(valHT-valH0T0))/(valH1T0-valH0T0)) + h0_rh
-        print("I2C Direct Humidity:    " + str(RH))
+        self.RH = (((h1_rh-h0_rh)*(valHT-valH0T0))/(valH1T0-valH0T0)) + h0_rh
+        
         
         
     def run(self):
         while True:
-            self.displayAccelerometerData()
-            self.displayMagnetometerData()
-            self.displayPressureData()
-            self.displayHumidityData()
-            self.getHumidityData()
-            
-            sleep(self.rateInSec)
+            if self.enableHI2CSensor:
+                self.displayAccelerometerData()
+                self.displayMagnetometerData()
+                self.displayPressureData()
+                self.displayHumidityData()
+                self.getHumidityData()
+                print("I2C Direct Humidity:    " + str(self.RH))
+                self.sensorData.setName("I2C_Humid")
+                self.sensorData.addValue(self.RH)
+                self.manager.handleSensorData(self.sensorData)
+                
+                sleep(self.rateInSec)
         
     
         

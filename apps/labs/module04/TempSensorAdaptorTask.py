@@ -16,6 +16,7 @@ class TempSensorAdaptorTask(threading.Thread):
     sensorData = SensorData()
     sense = SenseHat()
     manager = SensorDataManager()
+    enableTempSensor = False
     
     '''
     Read the Temperature from the SenseHAT
@@ -32,10 +33,11 @@ class TempSensorAdaptorTask(threading.Thread):
     
     def run(self):
         while True:
-            self.sensorData.setName('Temp')
-            self.sensorData.addValue(self.getTemperature())
-            #print(self.sensorData.curValue)
-            self.manager.handleSensorData(self.sensorData)
-            
-            sleep(self.rateInSec)
-    
+            if self.enableTempSensor:
+                self.sensorData.setName('Temp')
+                self.sensorData.addValue(self.getTemperature())
+                #print(self.sensorData.curValue)
+                self.manager.handleSensorData(self.sensorData)
+                
+                sleep(self.rateInSec)
+        
