@@ -23,18 +23,21 @@ class SensorData():
     
 
     def __init__(self):
-        self.timeStamp = str(datetime.now())
+        '''
+        Constructor
+        '''
         
     
     '''
     store the aggregated sensor data, track the number of updates, maintain a running average, 
     and track the min, max and current temperature value
-    '''   
+    '''  
+         
     def addValue(self,newVal):
         self.sampleCount += 1
         self.curValue = newVal
         self.totValue += newVal
-        
+        self.timeStamp = str(datetime.now())
         if (self.curValue < self.minValue):
             self.minValue = self.curValue
             

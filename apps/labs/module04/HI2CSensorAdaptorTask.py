@@ -13,7 +13,8 @@ from labs.common import ConfigConst
 import logging
 from time import sleep
 from labs.common.SensorData import SensorData
-from labs.module03.SensorDataManager import SensorDataManager
+from labs.module04.SensorDataManager import SensorDataManager
+from _datetime import datetime
 
 
 i2cBus          = smbus2.SMBus(1) 
@@ -41,7 +42,7 @@ class HI2CSensorAdaptorTask(threading.Thread):
     manager = SensorDataManager()
     enableHI2CSensor = False
 
-    def __init__(self,rateInSec = 5):
+    def __init__(self,rateInSec = 10):
         super(HI2CSensorAdaptorTask,self).__init__()
         
         self.rateInSec = rateInSec
@@ -75,8 +76,11 @@ class HI2CSensorAdaptorTask(threading.Thread):
     def displayHumidityData(self):
         humidityData = i2cBus.read_i2c_block_data(humidAddr, begAddr, totBytes)
         print("Humidity block data:         " + str(humidityData))
-        
-     
+    
+    ''' 
+    Read the data from I2C bus. 
+    Combine the LSB and MSB data into a human readable float representing humidity from the sensor   
+    ''' 
     def getHumidityData(self):
         bits = 8
         
@@ -105,6 +109,8 @@ class HI2CSensorAdaptorTask(threading.Thread):
         
         self.RH = (((h1_rh-h0_rh)*(valHT-valH0T0))/(valH1T0-valH0T0)) + h0_rh
         
+        return(self.RH)
+        
         
         
     def run(self):
@@ -115,7 +121,7 @@ class HI2CSensorAdaptorTask(threading.Thread):
                 self.displayPressureData()
                 self.displayHumidityData()
                 self.getHumidityData()
-                print("I2C Direct Humidity:    " + str(self.RH))
+                #print(str(datetime.now()) + "I2C Direct Humidity:    " + str(self.RH))
                 self.sensorData.setName("I2C_Humid")
                 self.sensorData.addValue(self.RH)
                 self.manager.handleSensorData(self.sensorData)

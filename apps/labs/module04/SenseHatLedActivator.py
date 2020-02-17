@@ -22,11 +22,16 @@ class SenseHatLedActivator(threading.Thread):
         self.blue   = (0,0,255)
         self.yellow = (255,255,0)
         self.green  = (0,255,0)
+        self.purple = (160,32,240)
         
     '''
     If current temperature exceeds the 'nominalTemp, a red letter 'H' representing 'Hot' will show on the LED for 1 second, 
     If current temperature falls below the 'nominalTemp, a blue letter 'C' representing 'Cool' will show on the LED for 1 second,
     After that, the LED will show current Temperature value    
+    If current humidity exceeds the 'nominalHumid, a letter 'M' representing 'Mosit' will show on the LED for 1 second, 
+    if current humidity falls below the 'nominalHumid, a letter 'D' representing 'Dry' will show on the LED for 1 second.  
+    For distinguish, if data comes from SenseHAT API, the color of letter is green.
+    If data comes from I2C bus, the color of letter is purple.
     '''    
     
     def run(self,temp):
@@ -54,19 +59,19 @@ class SenseHatLedActivator(threading.Thread):
         self.sh.show_message(self.msg,scroll_speed=0.2)
         
     def run4(self,humid):
-        self.sh.show_letter("D",self.yellow)
+        self.sh.show_letter("D",self.green)
         sleep(1)
         self.msg = 'SenseHat Humidity: ' + str(humid)+ '%'
         self.sh.show_message(self.msg,scroll_speed=0.2)
         
     def run5(self,humid):
-        self.sh.show_letter("M",self.green)
+        self.sh.show_letter("M",self.purple)
         sleep(1)
         self.msg = 'I2C Humidity: ' + str(humid)+ '%'
         self.sh.show_message(self.msg,scroll_speed=0.2)
         
     def run6(self,humid):
-        self.sh.show_letter("D",self.yellow)
+        self.sh.show_letter("D",self.purple)
         sleep(1)
         self.msg = 'I2C Humidity: ' + str(humid)+ '%'
         self.sh.show_message(self.msg,scroll_speed=0.2)

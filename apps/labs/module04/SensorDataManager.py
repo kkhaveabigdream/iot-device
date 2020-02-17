@@ -38,7 +38,7 @@ class SensorDataManager(object):
         
     def handleSensorData(self,sensorData):
         self.nominalTemp = float(self.config.getValue(ConfigConst.DEVICE, ConfigConst.NOMINAL_TEMP))
-        self.nominalHumid= float(self.config.getValue(ConfigConst.DEVICE, ConfigConst.NOMINAL_Humid))
+        self.nominalHumid= float(self.config.getValue(ConfigConst.DEVICE, ConfigConst.NOMINAL_HUMID))
         self.time       = sensorData.timeStamp                                     
         self.average    = sensorData.avgValue
         self.samples    = sensorData.getCount()

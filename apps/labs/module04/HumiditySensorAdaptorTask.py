@@ -9,6 +9,7 @@ from labs.common.SensorData import SensorData
 from sense_hat import SenseHat
 from time import sleep
 from labs.module04.SensorDataManager import SensorDataManager
+from labs.module04.HI2CSensorAdaptorTask import HI2CSensorAdaptorTask
 
 
 class HumiditySensorAdaptorTask(threading.Thread):
@@ -17,10 +18,11 @@ class HumiditySensorAdaptorTask(threading.Thread):
     sensorData = SensorData()
     sense = SenseHat()
     manager = SensorDataManager() 
+    i2cHumid = HI2CSensorAdaptorTask()
     enableHumidSensor = False
     
     '''
-    Read the Temperature from the SenseHAT
+    Read the Humidity data from the SenseHAT
     '''
 
     def __init__(self, rateInSec=10):
@@ -35,10 +37,11 @@ class HumiditySensorAdaptorTask(threading.Thread):
     def run(self):
         while True:
             if self.enableHumidSensor:
-                self.sensorData.setName("Humid")
-                print("SenseHat API Humidity " + str(self.curHumid))
+                self.sensorData.setName("Humid")                
                 self.sensorData.addValue(self.getHumidity())
-                #print(self.sensorData.curValue)
+                #print(str(datetime.now()) + "SenseHat API Humidity   " + str(self.curHumid))
+                #print(str(datetime.now()) + "I2C Direct Humidity:    " + str(self.i2cHumid.getHumidityData()))
+                ##print(self.sensorData.curValue)
                 self.manager.handleSensorData(self.sensorData)
                 
                 sleep(self.rateInSec)
