@@ -5,9 +5,9 @@ Created on Feb 5, 2020
 '''
 import logging
 from time import sleep
-from labs.module04.TempSensorAdaptorTask import TempSensorAdaptorTask
-from labs.module04.HumiditySensorAdaptorTask import HumiditySensorAdaptorTask
-from labs.module04.HI2CSensorAdaptorTask import HI2CSensorAdaptorTask
+from labs.module05.TempSensorAdaptorTask import TempSensorAdaptorTask
+from labs.module05.HumiditySensorAdaptorTask import HumiditySensorAdaptorTask
+from labs.module05.HI2CSensorAdaptorTask import HI2CSensorAdaptorTask
 from _datetime import datetime
 
 

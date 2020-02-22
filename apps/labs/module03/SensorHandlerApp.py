@@ -7,8 +7,9 @@ import logging
 from time import sleep
 from labs.module03.TempSensorAdaptorTask import TempSensorAdaptorTask
 
-logging.getLogger().setLevel(logging.INFO)
-#logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.INFO)
+#logging.getLogger().setLevel(logging.DEBUG)
+#logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.DEBUG)
 logging.info("Starting temperature sensor adaptor  daemon thread...")
 
 

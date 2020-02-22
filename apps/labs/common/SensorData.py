@@ -34,10 +34,11 @@ class SensorData():
     '''  
          
     def addValue(self,newVal):
+        self.timeStamp = str(datetime.now())
         self.sampleCount += 1
         self.curValue = newVal
         self.totValue += newVal
-        self.timeStamp = str(datetime.now())
+        
         if (self.curValue < self.minValue):
             self.minValue = self.curValue
             
