@@ -13,6 +13,11 @@ Please note: While some example test cases may be provided, you must write your 
 
 import unittest
 
+from labs.module05.TempSensorAdaptorTask import TempSensorAdaptorTask
+from labs.common.SensorData import SensorData
+from labs.common.DataUtil import DataUtil
+
+
 
 class Module05Test(unittest.TestCase):
 
@@ -22,7 +27,9 @@ class Module05Test(unittest.TestCase):
 	instances of complex objects, initialize any requisite connections, etc.
 	"""
 	def setUp(self):
-		pass
+		self.tempTask = TempSensorAdaptorTask()
+		self.tempSensorData = SensorData()
+		self.dataUtil = DataUtil()
 
 	"""
 	Use this to tear down any allocated resources after your tests are complete. This
@@ -34,7 +41,11 @@ class Module05Test(unittest.TestCase):
 	"""
 	Place your comments describing the test here.
 	"""
-	def testSomething(self):
+	def testtoJsonFromSensorData(self):
+		self.tempSensorData.addValue(self.tempTask.getTemperature())
+		self.jsonData = self.dataUtil.toJsonFromSensorData(self.tempSensorData)
+		print(type(self.jsonData))
+		self.assertTrue(type(self.jsonData)==str)
 		pass
 
 if __name__ == "__main__":
