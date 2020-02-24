@@ -23,8 +23,8 @@ class DataUtil(object):
         
     def toJsonFromSensorData(self,SensorData):
         jsonData = json.dumps(SensorData.__dict__)
-        print('-->')
-        print(jsonData)
+        #print('-->')
+        #print(jsonData)
         return jsonData
         
         
@@ -56,23 +56,23 @@ class DataUtil(object):
       
     def toJsonFromActuatorData(self,ActuatorData):
         jsonData = json.dumps(ActuatorData.__dict__)
-        print('-->')
-        print(jsonData)
+        #print('-->')
+        #print(jsonData)
         return jsonData
         
           
     def toActuatorDataFromJson(self,jsonData):
         adDict = json.loads(jsonData)
         
-        print(" decode [pre] --> " + str(adDict))
+        #print(" decode [pre] --> " + str(adDict))
         
         ad              = ActuatorData()
-        ad.Name         = adDict['Name']
+        ad.Name         = adDict['name']
         ad.timeStamp    = adDict['timeStamp']
-        ad.Command      = adDict['Command']
-        ad.Value        = adDict['Value']
+        ad.Command      = adDict['command']
+        ad.Value        = adDict['curValue']
         
-        print(" decode [post] --> " + str(ad))
+        #print(" decode [post] --> " + str(ad))
         
         return ad
          

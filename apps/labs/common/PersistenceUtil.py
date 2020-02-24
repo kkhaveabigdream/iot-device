@@ -5,6 +5,7 @@ Created on Feb 19, 2020
 '''
 import redis
 from labs.common.DataUtil import DataUtil
+import logging
 
 class PersistenceUtil(object):
     '''
@@ -22,6 +23,8 @@ class PersistenceUtil(object):
     def writeSensorDataToRedis(self,SensorData):
         jsondata = self.datautil.toJsonFromSensorData(SensorData)
         #self.r.lpush("SensorData", jsondata)
+        logging.info("Writing jsonSensorData to Redis...")
+        logging.info("SensorData: " + jsondata)
         self.r.publish("SensorData", jsondata)
         
     def writeActuatorDataToRedis(self,ActuatorData):

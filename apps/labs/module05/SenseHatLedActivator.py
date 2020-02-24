@@ -35,20 +35,20 @@ class SenseHatLedActivator(threading.Thread):
     '''    
     
     def run(self,temp):
-        #self.sh.show_letter("H")
-        self.sh.show_letter("H",self.red)
+        self.sh.show_letter("H")
+        #self.sh.show_letter("H",self.red)
         sleep(1)
         self.msg = str(temp) + ' ' + chr(176) + 'C'
         #self.sh.show_message(self.msg)
         #self.sh.show_message(self.msg,scroll_speed=0.3)
         
     def run2(self,temp):
-        #self.sh.show_letter("C")
-        self.sh.show_letter("C",self.blue)
+        self.sh.show_letter("C")
+        #self.sh.show_letter("C",self.blue)
         sleep(1)
         self.msg = str(temp)+ ' ' + chr(176) + ' C'
         #self.sh.show_message(self.msg)
-        self.sh.show_message(self.msg,scroll_speed=0.3)
+        #self.sh.show_message(self.msg,scroll_speed=0.3)
         
     def run3(self,humid):
         #self.sh.show_letter("M")

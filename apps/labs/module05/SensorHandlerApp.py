@@ -16,8 +16,8 @@ from labs.common.ActuatorDataListener import ActuatorDataListener
 
 
 logging.getLogger().setLevel(logging.INFO)
-#logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.INFO)
-logging.info("Starting temperature sensor adaptor  daemon thread...")
+logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s',level=logging.DEBUG)
+logging.info("Starting temperature sensor adaptor daemon thread...")
 
 
 
