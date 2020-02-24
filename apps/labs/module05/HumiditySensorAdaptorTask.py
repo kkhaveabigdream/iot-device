@@ -22,7 +22,9 @@ class HumiditySensorAdaptorTask():
     '''
 
     def __init__(self):
-        self.time      = self.sensorData.timeStamp 
+        '''
+        Constructor
+        '''
         
     def getHumidity(self):
         self.curHumid = self.sense.get_humidity()

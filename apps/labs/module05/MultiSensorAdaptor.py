@@ -8,9 +8,11 @@ import threading
 from labs.common.SensorData import SensorData
 from labs.module05.SensorDataManager import SensorDataManager
 from labs.module05.TempSensorAdaptorTask import TempSensorAdaptorTask
-from labs.module05.HumiditySensorAdaptorTask import HumiditySensorAdaptorTask
-from labs.module05.HI2CSensorAdaptorTask import HI2CSensorAdaptorTask
+# from labs.module05.HumiditySensorAdaptorTask import HumiditySensorAdaptorTask
+# from labs.module05.HI2CSensorAdaptorTask import HI2CSensorAdaptorTask
 from labs.common.PersistenceUtil import PersistenceUtil
+
+
 
 
 class MultiSensorAdaptor(threading.Thread):
@@ -25,9 +27,11 @@ class MultiSensorAdaptor(threading.Thread):
     hi2cSensorData = SensorData()
     manager = SensorDataManager()
     tempsensor = TempSensorAdaptorTask()
-    humiditysensor = HumiditySensorAdaptorTask()
-    hi2csensor = HI2CSensorAdaptorTask()
+#     humiditysensor = HumiditySensorAdaptorTask()
+#     hi2csensor = HI2CSensorAdaptorTask()
     persistenceutil = PersistenceUtil()
+    
+    
     
 
 
@@ -35,10 +39,13 @@ class MultiSensorAdaptor(threading.Thread):
         threading.Thread.__init__(self)
         #self.sensorData = SensorData()
         self.rateInSec = rateInSec
-        self.time      = self.sensorData.timeStamp 
+        #self.time      = self.sensorData.timeStamp 
 
     def run(self):
         while True:
+            
+            
+            
             if self.enableTempSensor:
                 self.tempSensorData.setName('Temp')
                 self.tempSensorData.addValue(self.tempsensor.getTemperature())
@@ -66,7 +73,7 @@ class MultiSensorAdaptor(threading.Thread):
 #                 self.getHumidityData()
 #                 print(str(datetime.now()) + "I2C Direct Humidity:    " + str(self.RH))
                 self.hi2cSensorData.setName("I2C_Humid")
-                self.hi2cSensorData.addValue(self.hi2csensor.RH)
+                self.hi2cSensorData.addValue(self.hi2csensor.getHumidityData())
                 #self.manager.handleSensorData(self.sensorData)
                 self.persistenceutil.writeSensorDataToRedis(self.hi2cSensorData)
                 

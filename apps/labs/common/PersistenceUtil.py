@@ -21,9 +21,14 @@ class PersistenceUtil(object):
         
     def writeSensorDataToRedis(self,SensorData):
         jsondata = self.datautil.toJsonFromSensorData(SensorData)
-        self.r.lpush("SensorData", jsondata)
+        #self.r.lpush("SensorData", jsondata)
+        self.r.publish("SensorData", jsondata)
         
     def writeActuatorDataToRedis(self,ActuatorData):
         jsondata = self.datautil.toJsonFromActuatorData(ActuatorData)
-        self.r.lpush("ActuatorData", jsondata)
+        #self.r.lpush("ActuatorData", jsondata)
+        self.r.publish("ActuatorData", jsondata)
     
+    def getSensorData(self):
+        sensorData = self.r.get("SensorData")
+        return sensorData
