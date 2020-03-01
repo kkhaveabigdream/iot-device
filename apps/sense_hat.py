@@ -26,7 +26,7 @@ class SenseHat():
 
     def get_humidity(self):
         # NOTE: This is just a sample
-        print('Random humidity value being generated...')
+        #print('Random humidity value being generated...')
         return round(uniform(30.0, 40.0), 2)
     
     def get_temperature(self):
@@ -34,7 +34,7 @@ class SenseHat():
     
     def get_temperature_from_humidity(self):
         # NOTE: This is just a sample
-        print('Random temperature value being generated...')
+        #print('Random temperature value being generated...')
         return round(uniform(18.0, 25.0), 2)
     
     def get_temperature_from_pressure(self):
@@ -42,7 +42,7 @@ class SenseHat():
     
     def get_pressure(self):
         # NOTE: This is just a sample
-        print('Random pressure value being generated...')
+        #print('Random pressure value being generated...')
         return round(uniform(1020.0, 1035.0), 2)
             
     def set_rotation(self, rotateDeg):
