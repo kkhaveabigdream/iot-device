@@ -65,7 +65,7 @@ class MqttClientConnector(object):
         self.client.disconnect()
         
         
-        self.client.subscribe("kai_test", 2)
+        #self.client.subscribe("kai_test", 0)
 
 
 
