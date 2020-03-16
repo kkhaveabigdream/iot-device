@@ -16,12 +16,18 @@ class CoapClientConnector(object):
         '''
         Constructor
         '''
-             
+        
+    '''
+    Connect to the local Coap Server
+    '''           
     def initClient(self):
         host = "127.0.0.1"
         port = 5683
         self.client = HelperClient(server=(host,port))
-         
+    
+    '''
+    Get the payload from resource
+    '''     
     def getRequest(self,resource):
         self.initClient()       
         response = self.client.get(resource)
@@ -32,7 +38,10 @@ class CoapClientConnector(object):
         #print(response.payload)  
         print('------->')
         self.client.stop()
-        
+     
+    '''
+    Post the data to the resource
+    '''   
     def postRequest(self,resource,payload):
         self.initClient()   
         response = self.client.post(resource,payload)
@@ -43,7 +52,10 @@ class CoapClientConnector(object):
         print('------->')
         
         self.client.stop()
-        
+    
+    '''
+    Update the resource
+    '''    
     def putRequest(self,resource,payload):
         self.initClient()   
         response = self.client.put(resource,payload)
@@ -52,7 +64,10 @@ class CoapClientConnector(object):
         print("Starting Put Request...\n")
         logging.info(response.pretty_print())
         print('------->')
-        
+    
+    '''
+    Delete the resource
+    '''   
     def deleteRequest(self,resource):    
         self.initClient()   
         response = self.client.delete(resource)

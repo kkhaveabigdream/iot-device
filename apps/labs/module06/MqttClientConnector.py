@@ -60,7 +60,7 @@ class MqttClientConnector(object):
         logging.info("SensorData befor publishing: " + jsonData)
         self.client.loop_start()
         
-        self.client.publish("kai_test", jsonData, 2, True)
+        self.client.publish("kai_test1", jsonData, 2, True)
         self.client.loop_stop()
         self.client.disconnect()
         
