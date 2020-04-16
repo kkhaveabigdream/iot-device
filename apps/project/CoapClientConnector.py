@@ -21,7 +21,9 @@ class CoapClientConnector(object):
     Connect to the local Coap Server
     '''           
     def initClient(self):
-        host = "127.0.0.1"
+        #host = "127.0.0.1"
+        #host = "169.254.94.97"
+        host = "192.168.0.131"
         port = 5683
         self.client = HelperClient(server=(host,port))
 

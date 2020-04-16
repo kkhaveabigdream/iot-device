@@ -5,8 +5,6 @@ Created on Mar 11, 2020
 '''
 import logging
 from time import sleep
-from labs.module06.MqttClientConnector import MqttClientConnector
-from labs.module06.TempSensorAdaptorTask import TempSensorAdaptorTask
 from project.MultiSensorAdaptor import MultiSensorAdaptor
 
 #from labs.common.SensorDataListener import SensorDataListener

@@ -6,9 +6,9 @@ Created on Feb 5, 2020
 from time import sleep
 import threading
 from labs.common.SensorData import SensorData
-from project.SensorDataManager import SensorDataManager
+#from project.SensorDataManager import SensorDataManager
 from project.TempSensorAdaptorTask import TempSensorAdaptorTask
-from labs.module06.HumiditySensorAdaptorTask import HumiditySensorAdaptorTask
+from project.HumiditySensorAdaptorTask import HumiditySensorAdaptorTask
 # from labs.module06.HI2CSensorAdaptorTask import HI2CSensorAdaptorTask
 from labs.common.PersistenceUtil import PersistenceUtil
 from project.CoapClientConnector import CoapClientConnector
@@ -28,7 +28,7 @@ class MultiSensorAdaptor(threading.Thread):
     tempSensorData = SensorData()
     humidSensorData = SensorData()
     hi2cSensorData = SensorData()
-    manager = SensorDataManager()
+    #manager = SensorDataManager()
     tempsensor = TempSensorAdaptorTask()
     humiditysensor = HumiditySensorAdaptorTask()
 #     hi2csensor = HI2CSensorAdaptorTask()
