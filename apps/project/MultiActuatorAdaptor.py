@@ -49,5 +49,9 @@ class MultiActuatorAdaptor(object):
             self.curHumid = round(actuatorData.Value, 2)    
             self.shLed.run6v (self.curHumid)            
             
-            
+        elif(actuatorData.getCommand()==0):
+            print("stop watering")         
+        
+        elif(actuatorData.getCommand()==1):
+            print("begin watering")           
             

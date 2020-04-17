@@ -17,6 +17,7 @@ logging.info("Starting temperature sensor adaptor daemon thread...")
 multiSensorAdaptor = MultiSensorAdaptor()
 multiSensorAdaptor.enableTempSensor=True
 multiSensorAdaptor.enableHumidSensor = True
+multiSensorAdaptor.enableMoistureSensor = False
 multiSensorAdaptor.run()
 
 

@@ -6,9 +6,10 @@ Created on Feb 5, 2020
 from time import sleep
 import threading
 from labs.common.SensorData import SensorData
-#from project.SensorDataManager import SensorDataManager
+from project.SensorDataManager import SensorDataManager
 from project.TempSensorAdaptorTask import TempSensorAdaptorTask
 from project.HumiditySensorAdaptorTask import HumiditySensorAdaptorTask
+#from project.SoilMoistureSensorAdaptorTask import SoilMoistureSensorAdaptorTask
 # from labs.module06.HI2CSensorAdaptorTask import HI2CSensorAdaptorTask
 from labs.common.PersistenceUtil import PersistenceUtil
 from project.CoapClientConnector import CoapClientConnector
@@ -25,12 +26,15 @@ class MultiSensorAdaptor(threading.Thread):
     rateInSec = 10
     enableTempSensor = False
     enableHumidSensor = False
+    enableMoistureSensor = False
     tempSensorData = SensorData()
     humidSensorData = SensorData()
+    moistureSensorData = SensorData()
     hi2cSensorData = SensorData()
-    #manager = SensorDataManager()
+    manager = SensorDataManager()
     tempsensor = TempSensorAdaptorTask()
     humiditysensor = HumiditySensorAdaptorTask()
+    #moisturesensor = SoilMoistureSensorAdaptorTask()
 #     hi2csensor = HI2CSensorAdaptorTask()
     persistenceutil = PersistenceUtil()
     coapClientConnector = CoapClientConnector();
@@ -51,6 +55,22 @@ class MultiSensorAdaptor(threading.Thread):
             
             
             
+            if self.enableHumidSensor:
+                resource = 'soilMoisture';
+                self.humidSensorData.setName("SoilMoisture")                
+                self.humidSensorData.addValue(self.humiditysensor.getHumidity())
+                #print(str(datetime.now()) + "SenseHat API Humidity   " + str(self.curHumid))
+                #print(str(datetime.now()) + "I2C Direct Humidity:    " + str(self.i2cHumid.getHumidityData()))
+                #print(self.sensorData.curValue)
+                self.manager.handleSensorData(self.humidSensorData)
+                payload = self.dataUtil.toJsonFromSensorData( self.humidSensorData)
+                #print(payload)
+                self.coapClientConnector.postRequest(resource, payload)
+                sleep(15)
+                  
+                self.coapClientConnector.getRequest(resource)   
+                sleep(5)
+            
             if self.enableTempSensor:
 
                 resource = 'temp';
@@ -64,22 +84,24 @@ class MultiSensorAdaptor(threading.Thread):
                 self.coapClientConnector.postRequest(resource, payload)
                 sleep(5)
                   
-                self.coapClientConnector.getRequest(resource)   
-                sleep(5)   
-             
-            if self.enableHumidSensor:
-                resource = 'soilMoisture';
-                self.humidSensorData.setName("SoilMoisture")                
-                self.humidSensorData.addValue(self.humiditysensor.getHumidity())
-                #print(str(datetime.now()) + "SenseHat API Humidity   " + str(self.curHumid))
-                #print(str(datetime.now()) + "I2C Direct Humidity:    " + str(self.i2cHumid.getHumidityData()))
-                #print(self.sensorData.curValue)
-                #self.manager.handleSensorData(self.sensorData)
-                payload = self.dataUtil.toJsonFromSensorData( self.humidSensorData)
-                #print(payload)
-                self.coapClientConnector.postRequest(resource, payload)
-                sleep(5)
-                  
-                self.coapClientConnector.getRequest(resource)   
-                sleep(5)   
+#                 self.coapClientConnector.getRequest(resource)   
+#                 sleep(5)   
+              
             
+                
+#             if self.enableMoistureSensor:
+#                 resource = 'soilMoisture';
+#                 self.moistureSensorData.setName("SoilMoisture")                
+#                 self.moistureSensorData.addValue(self.moisturesensor.getSoilMoisture())
+#                 #print(str(datetime.now()) + "SenseHat API Humidity   " + str(self.curHumid))
+#                 #print(str(datetime.now()) + "I2C Direct Humidity:    " + str(self.i2cHumid.getHumidityData()))
+#                 #print(self.sensorData.curValue)
+#                 #self.manager.handleSensorData(self.sensorData)
+#                 payload = self.dataUtil.toJsonFromSensorData( self.moistureSensorData)
+#                 #print(payload)
+#                 self.coapClientConnector.postRequest(resource, payload)
+#                 sleep(5)
+#                   
+#                 self.coapClientConnector.getRequest(resource)   
+#                 sleep(5)      
+#             

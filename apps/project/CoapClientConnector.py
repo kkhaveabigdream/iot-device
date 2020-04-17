@@ -4,13 +4,17 @@ Created on Mar 11, 2020
 @author: sk199
 '''
 from coapthon.client.helperclient import HelperClient
+from labs.common.ActuatorData import ActuatorData
 import logging
+from project.MultiActuatorAdaptor import MultiActuatorAdaptor
+from labs.common.DataUtil import DataUtil
 
 
 class CoapClientConnector(object):
     '''
     classdocs
-    '''    
+    '''   
+
 
     def __init__(self):
         '''
@@ -26,7 +30,9 @@ class CoapClientConnector(object):
         host = "192.168.0.131"
         port = 5683
         self.client = HelperClient(server=(host,port))
-
+        #self.actuatorData = ActuatorData()
+        self.multiActuator = MultiActuatorAdaptor()
+        self.dataUtil = DataUtil()
     
     '''
     Get the payload from resource
@@ -38,6 +44,10 @@ class CoapClientConnector(object):
         print("Starting Get Request...\n")
         logging.info(response.pretty_print())
         logging.info(response.payload)
+        self.actuatorData = self.dataUtil.toActuatorDataFromJson2(response.payload)
+        print(response.payload)
+        self.actuatorData.setCommand(self.actuatorData.Value)
+        self.multiActuator.updateActuator(self.actuatorData)
         #print(response.payload)  
         print('------->')
         self.client.stop()

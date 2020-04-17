@@ -71,6 +71,19 @@ class DataUtil(object):
         ad.timeStamp    = adDict['timeStamp']
         ad.Command      = adDict['command']
         ad.Value        = adDict['curValue']
+        ad.Value        = adDict['value']
+        ad.timeStamp    = adDict['timestamp']
+        
+        #print(" decode [post] --> " + str(ad))
+        
+        return ad
+    
+    def toActuatorDataFromJson2(self,jsonData):
+        adDict = json.loads(jsonData)
+        
+        ad              = ActuatorData()
+        ad.Value        = adDict['value']
+        ad.timeStamp    = adDict['timestamp']
         
         #print(" decode [post] --> " + str(ad))
         
